@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { SearchIcon, ShoppingCartOutlinedIcon } from "@mui/icons-material";
+import { Search, ShoppingCartOutlined } from "@mui/icons-material";
 import { Badge } from "@mui/material";
 
 const Container = styled.div`
@@ -65,7 +65,7 @@ const Navbar = () => {
           <Language>EN</Language>
           <SearchContainer>
             <Input />
-            <SearchIcon style={{ color: "gray", fontSize: 16 }} />
+            <Search style={{ color: "gray", fontSize: 16 }} />
           </SearchContainer>
         </Left>
         <Center>
@@ -76,7 +76,7 @@ const Navbar = () => {
           <MenuItem>SIGN IN</MenuItem>
           <MenuItem>
             <Badge badgeContent={4} color="primary">
-              <ShoppingCartOutlinedIcon />
+              <ShoppingCartOutlined />
             </Badge>
           </MenuItem>
         </Right>
