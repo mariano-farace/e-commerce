@@ -47,7 +47,7 @@ export const popularProducts = [
   },
   {
     id: 2,
-    img: "https://cdn.shopify.com/s/files/1/0101/4832/products/Angela_Natural_Tee.png?v=1606780388",
+    img: "https://www.prada.com/content/dam/pradanux_products/U/UCS/UCS339/10IVF0194/UCS339_10IV_F0194_S_211_SLF.png/jcr:content/renditions/cq5dam.web.hebebed.1000.1000.square.jpg",
   },
   {
     id: 3,
@@ -67,7 +67,7 @@ export const popularProducts = [
   },
   {
     id: 7,
-    img: "https://www.vintageindustries.nl/download_front/qympzk1762/2217_Arrow_Jacket_Forest.png",
+    img: "https://www.prada.com/content/dam/pradanux_products/U/UPW/UPW405/1ZXRF0002/UPW405_1ZXR_F0002_SLF.png/jcr:content/renditions/cq5dam.web.hebebed.1000.1000.square.jpg",
   },
   {
     id: 8,
