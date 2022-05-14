@@ -6,15 +6,16 @@ const userRouter = require("./routes/user");
 const authRouter = require("./routes/auth");
 
 app.use(express.json()); // for parsing application/json
-app.use(express.urlencoded({ extended: true })) /
-  mongoose
-    .connect(MONGO_DB_URL)
-    .then(() => {
-      console.log("Connected to MongoDB");
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+app.use(express.urlencoded({ extended: true }));
+
+mongoose
+  .connect(MONGO_DB_URL)
+  .then(() => {
+    console.log("Connected to MongoDB");
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 
 app.get("/api/v1/test", (req, res) => {
   console.log("successful test");
