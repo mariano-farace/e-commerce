@@ -49,6 +49,7 @@ router.post("/login", async (req, res) => {
       { expiresIn: "1h" }
     );
     // TODO enviar el token como header!
+    // TODO verificar que coño pasa user._doc y porque y desde cuando lo necesitas!
     const { password: passwordToDiscard, ...others } = user._doc;
     res.status(200).json({ ...others, accessToken });
   } catch (err) {
