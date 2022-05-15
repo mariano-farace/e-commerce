@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const { MONGO_DB_URL, PORT } = require("./config");
 const userRouter = require("./routes/user");
 const authRouter = require("./routes/auth");
+// TODO install nodemon as dev dependency
 
 app.use(express.json()); // for parsing application/json
 app.use(express.urlencoded({ extended: true }));
