@@ -5,7 +5,8 @@ const { MONGO_DB_URL, PORT } = require("./config");
 const userRouter = require("./routes/user");
 const authRouter = require("./routes/auth");
 // TODO install nodemon as dev dependency
-
+// TODO add multer and helmet
+// TODO reestructurar los folders para dividirlos mejor
 app.use(express.json()); // for parsing application/json
 app.use(express.urlencoded({ extended: true }));
 
