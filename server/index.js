@@ -7,6 +7,7 @@ const authRouter = require("./routes/auth");
 // TODO install nodemon as dev dependency
 // TODO add multer and helmet
 // TODO reestructurar los folders para dividirlos mejor
+// TODO hacer validacion de datos, con tipo y longitud
 app.use(express.json()); // for parsing application/json
 app.use(express.urlencoded({ extended: true }));
 
