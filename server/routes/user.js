@@ -38,7 +38,7 @@ router.delete("/:id", verifyTokenAndAuthorization, async (req, res) => {
 });
 
 // GET USER. ONLY ADMIN CAN DO THIS
-router.get("/:id", verifyTokenAndAdmin, async (req, res) => {
+router.get("find/:id", verifyTokenAndAdmin, async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
 
