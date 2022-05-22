@@ -41,6 +41,9 @@ router.delete("/:id", verifyTokenAndAuthorization, async (req, res) => {
 router.get("/:id", verifyTokenAndAdmin, async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
+
+    // TODO aca el user esta devolviendo el password, modificarlo con destructuring para sacar el pass del medio
+
     res.status(200).json(user);
   } catch (err) {
     res.status(500).json({ message: err });
@@ -53,7 +56,8 @@ router.get("/", verifyTokenAndAdmin, async (req, res) => {
 
   try {
     const users = query
-      ? await User.find().sort({ _id: -1 }).limit(5)
+      ? // TODO Comprobar esto, los esta ordenando por id, no por fecha, deberias poner created at????
+        await User.find().sort({ _id: -1 }).limit(5)
       : await User.find();
     res.status(200).json(users);
   } catch (err) {
