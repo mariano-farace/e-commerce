@@ -3,7 +3,7 @@ const {
   verifyTokenAndAuthorization,
   verifyTokenAndAdmin,
 } = require("./verifyJWT");
-const Cart = require("../models/cart");
+const Cart = require("../models/Cart");
 
 const router = require("express").Router();
 
