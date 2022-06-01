@@ -7,11 +7,21 @@ const authRouter = require("./routes/auth");
 const productRouter = require("./routes/product");
 const orderRouter = require("./routes/order");
 const cartRouter = require("./routes/cart");
+const cors = require("cors");
+
 // TODO install nodemon as dev dependency
 // TODO add multer and helmet
 // TODO reestructurar los folders para dividirlos mejor
 // TODO hacer validacion de datos, con tipo y longitud
 // TODO Usar Redis
+
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+  })
+);
+
 app.use(express.json()); // for parsing application/json
 app.use(express.urlencoded({ extended: true }));
 
