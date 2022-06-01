@@ -62,11 +62,11 @@ const Products = ({ cat, filter, sort }) => {
   return (
     <Container>
       {cat
-        ? filteredProducts.map((item) => <Product item={item} key={item.id} />)
+        ? filteredProducts.map((item) => <Product item={item} key={item._id} />)
         : // Para poder mostrarl os productos en Home page es encesario esto. Esta mostrando los primeros 8 productos que hay en la base de datos, con ningun criterio
           products
             .slice(0, 8)
-            .map((item) => <Product item={item} key={item.id} />)}
+            .map((item) => <Product item={item} key={item._id} />)}
     </Container>
   );
 };
