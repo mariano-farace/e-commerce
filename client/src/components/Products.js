@@ -63,7 +63,7 @@ const Products = ({ cat, filter, sort }) => {
     <Container>
       {cat
         ? filteredProducts.map((item) => <Product item={item} key={item._id} />)
-        : // Para poder mostrarl os productos en Home page es encesario esto. Esta mostrando los primeros 8 productos que hay en la base de datos, con ningun criterio
+        : // Para poder mostrar los productos en Home page es encesario esto. Esta mostrando los primeros 8 productos que hay en la base de datos, con ningun criterio //TODO modificarlo para mostrar los productos mas relevatnes, mejor vendidos, en oferta o agregar un indice de importancia para mostrar!
           products
             .slice(0, 8)
             .map((item) => <Product item={item} key={item._id} />)}
