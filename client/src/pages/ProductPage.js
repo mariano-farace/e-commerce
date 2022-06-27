@@ -8,6 +8,8 @@ import Navbar from "../components/Navbar";
 import NewsLetter from "../components/NewsLetter";
 import { publicRequest } from "../requestMethod";
 import { mobile } from "../responsive";
+import { addProduct } from "../redux/cartRedux";
+import { useDispatch } from "react-redux";
 
 const Container = styled.div``;
 
@@ -123,6 +125,7 @@ const Product = () => {
   const [quantity, setQuantity] = useState(1);
   const [color, setColor] = useState("");
   const [size, setSize] = useState("");
+  const dispatch = useDispatch();
 
   //TODO el useEfect se llama dos veces!
   useEffect(() => {
@@ -145,6 +148,10 @@ const Product = () => {
     } else {
       setQuantity(quantity + 1);
     }
+  };
+
+  const handleClick = () => {
+    dispatch(addProduct({ ...product, quantity, color, size }));
   };
 
   return (
@@ -181,7 +188,7 @@ const Product = () => {
               <Amount>{quantity}</Amount>
               <Add onClick={() => handleQuantity("inc")} />
             </AmountContainer>
-            <Button>Add to Cart</Button>
+            <Button onClick={() => handleClick()}>Add to Cart</Button>
           </AddContainer>
         </InfoContainer>
       </Wrapper>
