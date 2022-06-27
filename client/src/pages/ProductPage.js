@@ -126,7 +126,7 @@ const Product = () => {
   const [color, setColor] = useState("");
   const [size, setSize] = useState("");
   const dispatch = useDispatch();
-
+  //TODO fijate que cuando elegis el producto y no elegis explicitamente el color y el size, lo que ocurre es que quedan vacios, hay que agregarle un valor por defecto que sea dependiente de los valores que tiene el producto!
   //TODO el useEfect se llama dos veces!
   useEffect(() => {
     const getProduct = async () => {
@@ -165,7 +165,7 @@ const Product = () => {
         <InfoContainer>
           <Title>{product.title}</Title>
           <Description>{product.description}</Description>
-          <Price>{product.price}</Price>
+          <Price>${product.price} </Price>
           <FilterContainer>
             <Filter>
               <FilterTitle>Color</FilterTitle>
