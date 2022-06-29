@@ -2,10 +2,12 @@
     "env": {
         "node": true,
         "commonjs": true,
-        "es2021": true
+        "es2021": true,
+        "jest/globals": true
     },
     "extends": [
-        "standard", "prettier"
+        "standard",
+        "prettier"
     ],
     "parserOptions": {
         "ecmaVersion": "latest"
@@ -13,5 +15,8 @@
     "rules": {
         "prettier/prettier": "error"
     },
-    "plugins": ["prettier"]
+    "plugins": [
+        "prettier",
+        "jest"
+    ]
 }
