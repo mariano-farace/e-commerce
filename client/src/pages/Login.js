@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { login } from "../redux/apiCalls";
 import { mobile } from "../responsive";
@@ -57,7 +58,7 @@ const Button = styled.button`
   }
 `;
 
-const Link = styled.a`
+const LinkStyled = styled(Link)`
   margin: 5px 0px;
   font-size: 12px;
   text-decoration: underline;
@@ -97,8 +98,8 @@ const Login = () => {
             LOGIN
           </Button>
           {error && <Error>Invalid username or password</Error>}
-          <Link>Forgot YOUR PASSWORD?</Link>
-          <Link>CREATE A NEW ACCOUNT</Link>
+          <LinkStyled to="/">Forgot your password?</LinkStyled>
+          <LinkStyled to="/register">Create a new account</LinkStyled>
         </Form>
       </Wrapper>
     </Container>
