@@ -2,8 +2,9 @@ import styled from "styled-components";
 import { Search, ShoppingCartOutlined } from "@mui/icons-material";
 import { Badge } from "@mui/material";
 import { mobile } from "../responsive";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { logout } from "../redux/userRedux";
 const Container = styled.div`
   height: 60px;
   ${mobile({ height: "50px" })}
@@ -59,6 +60,14 @@ const Right = styled.div`
   ${mobile({ flex: 2, justifyContent: "center" })}
 `;
 
+const RightLogged = styled.div`
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  ${mobile({ flex: 2, justifyContent: "center" })}
+`;
+
 const MenuItem = styled.div`
   font-size: 14px;
   cursor: pointer;
@@ -67,6 +76,8 @@ const MenuItem = styled.div`
 `;
 const Navbar = () => {
   const quantity = useSelector((state) => state.cart.quantity);
+  const user = useSelector((state) => state.user.currentUser);
+  const dispatch = useDispatch();
 
   return (
     <Container>
@@ -82,8 +93,18 @@ const Navbar = () => {
           <Logo>MGF.</Logo>
         </Center>
         <Right>
-          <MenuItem>REGISTER</MenuItem>
-          <MenuItem>SIGN IN</MenuItem>
+          {user ? (
+            <MenuItem onClick={() => dispatch(logout())}>LOG OUT</MenuItem>
+          ) : (
+            <RightLogged>
+              <Link to="/register" style={{ textDecoration: "none" }}>
+                <MenuItem>REGISTER</MenuItem>
+              </Link>
+              <Link to="/login" style={{ textDecoration: "none" }}>
+                <MenuItem>SIGN IN</MenuItem>
+              </Link>
+            </RightLogged>
+          )}
           <Link to="/cart">
             <MenuItem>
               <Badge badgeContent={quantity} color="primary">
