@@ -46,8 +46,10 @@ app.use("/api/v1/products", productRouter);
 app.use("/api/v1/carts", cartRouter);
 app.use("/api/v1/orders", orderRouter);
 
-app.listen(PORT || 5000, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+if (process.env.NODE_ENV !== "test") {
+  app.listen(PORT || 5000, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
+}
 
 module.exports = app;
