@@ -23,6 +23,7 @@ describe("user creation", () => {
       .expect(200)
       .expect("Content-Type", /application\/json/);
 
+    // The response is the correct one
     expect(response.body).toEqual(
       expect.objectContaining({
         email: "test@mail.com",
@@ -30,6 +31,15 @@ describe("user creation", () => {
         isAdmin: false,
       })
     );
+
+    // The user is saved in the database and can be retrieved
+
+    const user = await User.findOne({ username: "test" });
+    // TODO improve this test adding the full object from database (id, isAdmin, password hashed, etc)
+    expect(user).toBeDefined();
+    expect(user.username).toBe(newUser.username);
+    expect(user.email).toBe(newUser.email);
+    expect(user.isAdmin).toBe(false);
   });
 
   test("creating user with non unique username fails", async () => {
@@ -65,7 +75,7 @@ describe("user creation", () => {
 });
 
 describe("user login", () => {
-  test("successfully login", async () => {
+  test("successfully login and returns proper object in response", async () => {
     const loginDetails = {
       username: "test",
       password: "12345",
@@ -83,6 +93,7 @@ describe("user login", () => {
         username: "test",
       })
     );
+    expect(response.body.accessToken).toBeDefined();
   });
   test("fail login wrong username", async () => {
     const loginDetails = {
