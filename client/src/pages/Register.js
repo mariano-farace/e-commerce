@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { mobile } from "../responsive";
+// TODO implementar error handling: si ya existe el usuario con ese username o mail
 
 const Container = styled.div`
   width: 100vw;
