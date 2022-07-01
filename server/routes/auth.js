@@ -8,7 +8,6 @@ const { JWT_SECRET_KEY } = require("../config");
 // TODO error handling: si ya existe el usuario, no deberia poder crearlo
 router.post("/register", async (req, res) => {
   const passwordHashed = await hashPassword(req.body.password);
-
   const newUser = new User({
     username: req.body.username,
     email: req.body.email,
@@ -36,7 +35,7 @@ router.post("/login", async (req, res) => {
     const value = await argon2.verify(user.password, password);
     // If password is incorrect
     if (value === false) {
-      return res.status(400).json({ message: "Wrong credentials" });
+      return res.status(401).json({ message: "Wrong credentials" });
     }
     // TODO review what you are passing here
     // TODO put this sign token function in helpers methods
