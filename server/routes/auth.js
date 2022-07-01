@@ -5,7 +5,6 @@ const argon2 = require("argon2");
 const jwt = require("jsonwebtoken");
 const { JWT_SECRET_KEY } = require("../config");
 
-// TODO error handling: si ya existe el usuario, no deberia poder crearlo
 router.post("/register", async (req, res) => {
   const passwordHashed = await hashPassword(req.body.password);
   const newUser = new User({
@@ -18,8 +17,13 @@ router.post("/register", async (req, res) => {
     const savedUser = await newUser.save();
     res.status(200).json(savedUser);
   } catch (err) {
-    console.log("err", err);
-    res.status(400).json({ message: err });
+    if (err.name === "MongoServerError" && err.code === 11000) {
+      res.status(400).json({
+        message: "User already exists",
+      });
+    } else {
+      res.status(500).json({ message: err });
+    }
   }
 });
 
