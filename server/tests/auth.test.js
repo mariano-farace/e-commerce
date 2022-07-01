@@ -10,7 +10,7 @@ describe("user creation", () => {
     await User.deleteMany({});
   });
 
-  test("create new user", async () => {
+  test("successfully create new user", async () => {
     const newUser = {
       username: "test",
       email: "test@mail.com",
@@ -27,8 +27,40 @@ describe("user creation", () => {
       expect.objectContaining({
         email: "test@mail.com",
         username: "test",
+        isAdmin: false,
       })
     );
+  });
+
+  test("creating user with non unique username fails", async () => {
+    const newUser = {
+      username: "test",
+      email: "test65456487@mail.com",
+      password: "12345",
+    };
+
+    const response = await api
+      .post("/api/v1/auth/register")
+      .send(newUser)
+      .expect(400)
+      .expect("Content-Type", /application\/json/);
+
+    expect(response.body).toEqual({ message: "User already exists" });
+  });
+  test("creating user with non unique mail fails", async () => {
+    const newUser = {
+      username: "testa6s5d4f65as4df",
+      email: "test@mail.com",
+      password: "12345",
+    };
+
+    const response = await api
+      .post("/api/v1/auth/register")
+      .send(newUser)
+      .expect(400)
+      .expect("Content-Type", /application\/json/);
+
+    expect(response.body).toEqual({ message: "User already exists" });
   });
 });
 
