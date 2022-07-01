@@ -1,45 +1,46 @@
 export const sliderItems = [
   {
     id: 1,
-    img: "https://p7.hiclipart.com/preview/24/616/942/pin-up-girl-dress-retro-style-vintage-clothing-dress.jpg",
-    title: "SUMMER SALE",
-    desc: "DON'T COMPROMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVALS.",
+    img: "https://i.pinimg.com/originals/c1/da/06/c1da06468c323e995fa157d4454e4fb7.png",
+    title: "FULL UNIFORMS",
+    desc: "PICK THE UNIFORM OF YOUR FAVORITE TEAM AND GET FLAT 30% OFF!.",
     bg: "f5fafd",
   },
   {
     id: 2,
-    img: "https://i.ibb.co/DG69bQ4/2.png",
+    img: "https://www.macadambasket.com/22969-home_default/sweat-nba-okc-thunder.jpg",
     title: "AUTUMN COLLECTION",
     desc: "DON'T COMPROMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVALS.",
     bg: "fcf1ed",
   },
   {
     id: 3,
-    img: "https://i.ibb.co/cXFnLLV/3.png",
-    title: "LOUNGEWEAR LOVE",
-    desc: "DON'T COMPROMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVALS.",
+    title: "HARDWOOD CLASSICS",
+    img: "https://cdn.nba.com/manage/2021/10/Allen-Iverson-76ers-Hero.png",
+    desc: "CHECK OUT THE RETRO COLLECTION!",
     bg: "fbf0f4",
   },
 ];
+//TODO borrar este archivo!
 
 export const categories = [
   {
     id: 1,
-    img: "https://images.pexels.com/photos/5886041/pexels-photo-5886041.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-    title: "SHIRT STYLE!",
-    cat: "women",
+    img: "https://c0.wallpaperflare.com/preview/985/936/953/assorted-nba-jerseys-hanged-on-clothes-hangers.jpg",
+    title: "JERSEYS",
+    cat: "jersey",
   },
   {
     id: 2,
-    img: "https://images.pexels.com/photos/2983464/pexels-photo-2983464.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-    title: "LOUNGEWEAR LOVE",
-    cat: "women",
+    img: "https://i.pinimg.com/564x/71/5a/2c/715a2cdf7337242b32ae8ad4d1ae212b.jpg",
+    title: "SNEAKERS",
+    cat: "sneakers",
   },
   {
     id: 3,
-    img: "https://images.pexels.com/photos/5480696/pexels-photo-5480696.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
-    title: "LIGHT JACKETS",
-    cat: "jeans",
+    img: "https://www.sneaker10.gr/2441643-product_large/nike-chi-mnk-df-swgmn-shrt-mmt-21.jpg",
+    title: "SHORTS",
+    cat: "shorts",
   },
 ];
 
