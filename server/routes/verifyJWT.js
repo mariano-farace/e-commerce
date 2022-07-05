@@ -24,6 +24,7 @@ const verifyToken = (req, res, next) => {
 
 const verifyTokenAndAuthorization = (req, res, next) => {
   verifyToken(req, res, () => {
+    // This function is passed as the "next" argument to verifyToken
     if (req.user.id === req.params.id || req.user.isAdmin) {
       next();
     } else {
@@ -34,6 +35,7 @@ const verifyTokenAndAuthorization = (req, res, next) => {
 
 const verifyTokenAndAdmin = (req, res, next) => {
   verifyToken(req, res, () => {
+    // This function is passed as the "next" argument to verifyToken
     if (req.user.isAdmin) {
       next();
     } else {
