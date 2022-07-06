@@ -1,9 +1,12 @@
-const router = require("express").Router();
-const User = require("../models/User");
+import express from "express";
+
+import * as argon2 from "argon2";
+const User = require("../models/User").default;
+
 const { hashPassword } = require("../helpers");
-const argon2 = require("argon2");
 const jwt = require("jsonwebtoken");
 const { JWT_SECRET_KEY } = require("../config");
+const router = express.Router();
 
 router.post("/register", async (req, res) => {
   const passwordHashed = await hashPassword(req.body.password);

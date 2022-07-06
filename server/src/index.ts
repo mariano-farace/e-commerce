@@ -1,13 +1,13 @@
-const express = require("express");
+import express, { json, urlencoded } from "express";
+import { connect } from "mongoose";
+import { MONGO_DB_URL, PORT } from "./config";
+import userRouter from "./routes/user";
+import authRouter from "./routes/auth";
+import productRouter from "./routes/product";
+import orderRouter from "./routes/order";
+import cartRouter from "./routes/cart";
+import cors from "cors";
 const app = express();
-const mongoose = require("mongoose");
-const { MONGO_DB_URL, PORT } = require("./config");
-const userRouter = require("./routes/user");
-const authRouter = require("./routes/auth");
-const productRouter = require("./routes/product");
-const orderRouter = require("./routes/order");
-const cartRouter = require("./routes/cart");
-const cors = require("cors");
 
 // TODO install nodemon as dev dependency
 // TODO add multer and helmet
@@ -22,11 +22,10 @@ app.use(
   })
 );
 
-app.use(express.json()); // for parsing application/json
-app.use(express.urlencoded({ extended: true }));
+app.use(json()); // for parsing application/json
+app.use(urlencoded({ extended: true }));
 
-mongoose
-  .connect(MONGO_DB_URL)
+connect(MONGO_DB_URL)
   .then(() => {
     console.log("Connected to MongoDB");
   })
@@ -52,4 +51,4 @@ if (process.env.NODE_ENV !== "test") {
   });
 }
 
-module.exports = app;
+export default app;

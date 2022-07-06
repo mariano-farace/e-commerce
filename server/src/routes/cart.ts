@@ -1,11 +1,17 @@
-const {
+import {
   verifyToken,
   verifyTokenAndAuthorization,
   verifyTokenAndAdmin,
-} = require("./verifyJWT");
-const Cart = require("../models/Cart");
+} from "./verifyJWT";
+import Cart, {
+  findByIdAndUpdate,
+  findByIdAndDelete,
+  findOne,
+  find,
+} from "../models/Cart";
 
-const router = require("express").Router();
+import express from "express";
+const router = express.Router();
 
 // CREATE
 
@@ -23,7 +29,7 @@ router.post("/", verifyToken, async (req, res) => {
 // UPDATE
 router.put("/:id", verifyTokenAndAuthorization, async (req, res) => {
   try {
-    const updatedCart = await Cart.findByIdAndUpdate(
+    const updatedCart = await findByIdAndUpdate(
       req.params.id,
       // TODO cambiar este metodo $set por uno mas apropiado
       { $set: req.body },
@@ -39,7 +45,7 @@ router.put("/:id", verifyTokenAndAuthorization, async (req, res) => {
 // DELETE
 router.delete("/:id", verifyTokenAndAuthorization, async (req, res) => {
   try {
-    await Cart.findByIdAndDelete(req.params.id);
+    await findByIdAndDelete(req.params.id);
     res.status(200).json({ message: "Cart deleted" });
   } catch (err) {
     res.status(500).json({ message: err });
@@ -49,7 +55,7 @@ router.delete("/:id", verifyTokenAndAuthorization, async (req, res) => {
 // GET USER CART.
 router.get("/find/:userId", verifyTokenAndAuthorization, async (req, res) => {
   try {
-    const cart = await Cart.findOne({ userId: req.params.id });
+    const cart = await findOne({ userId: req.params.id });
     res.status(200).json(cart);
   } catch (err) {
     res.status(500).json({ message: err });
@@ -59,11 +65,11 @@ router.get("/find/:userId", verifyTokenAndAuthorization, async (req, res) => {
 // GET ALL PRODUCTS.
 router.get("/", verifyTokenAndAdmin, async (req, res) => {
   try {
-    const carts = await Cart.find();
+    const carts = await find();
     res.status(200).json(carts);
   } catch (err) {
     res.status(500).json({ message: err });
   }
 });
 
-module.exports = router;
+export default router;

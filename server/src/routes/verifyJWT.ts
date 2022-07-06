@@ -1,4 +1,4 @@
-const jwt = require("jsonwebtoken");
+import { verify } from "jsonwebtoken";
 
 // TODO usar authorization header!
 // TODO escribir esto en una carpeta middleware
@@ -7,7 +7,7 @@ const verifyToken = (req, res, next) => {
   const authHeader = req.headers.token;
   if (authHeader) {
     const token = authHeader.split(" ")[1];
-    jwt.verify(token, process.env.JWT_SECRET_KEY, (err, user) => {
+    verify(token, process.env.JWT_SECRET_KEY, (err, user) => {
       if (err) {
         return res.status(401).json({ message: "Invalid token" });
       } else {
@@ -44,7 +44,7 @@ const verifyTokenAndAdmin = (req, res, next) => {
   });
 };
 
-module.exports = {
+export default {
   verifyToken,
   verifyTokenAndAuthorization,
   verifyTokenAndAdmin,

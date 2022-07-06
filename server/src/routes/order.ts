@@ -1,11 +1,17 @@
-const {
+import {
   verifyToken,
   verifyTokenAndAuthorization,
   verifyTokenAndAdmin,
-} = require("./verifyJWT");
-const Order = require("../models/Order");
+} from "./verifyJWT";
+import Order, {
+  findByIdAndUpdate,
+  findByIdAndDelete,
+  find,
+  aggregate,
+} from "../models/Order";
 
-const router = require("express").Router();
+import express from "express";
+const router = express.Router();
 
 // CREATE
 
@@ -23,7 +29,7 @@ router.post("/", verifyToken, async (req, res) => {
 // UPDATE
 router.put("/:id", verifyTokenAndAdmin, async (req, res) => {
   try {
-    const updatedOrder = await Order.findByIdAndUpdate(
+    const updatedOrder = await findByIdAndUpdate(
       req.params.id,
       // TODO cambiar este metodo $set por uno mas apropiado
       { $set: req.body },
@@ -39,7 +45,7 @@ router.put("/:id", verifyTokenAndAdmin, async (req, res) => {
 // DELETE
 router.delete("/:id", verifyTokenAndAdmin, async (req, res) => {
   try {
-    await Order.findByIdAndDelete(req.params.id);
+    await findByIdAndDelete(req.params.id);
     res.status(200).json({ message: "Order deleted" });
   } catch (err) {
     res.status(500).json({ message: err });
@@ -49,7 +55,7 @@ router.delete("/:id", verifyTokenAndAdmin, async (req, res) => {
 // GET USER ORDER.
 router.get("/find/:userId", verifyTokenAndAuthorization, async (req, res) => {
   try {
-    const order = await Order.find({ userId: req.params.id });
+    const order = await find({ userId: req.params.id });
     res.status(200).json(order);
   } catch (err) {
     res.status(500).json({ message: err });
@@ -59,7 +65,7 @@ router.get("/find/:userId", verifyTokenAndAuthorization, async (req, res) => {
 // GET ALL ORDERS.
 router.get("/", verifyTokenAndAdmin, async (req, res) => {
   try {
-    const orders = await Order.find();
+    const orders = await find();
     res.status(200).json(orders);
   } catch (err) {
     res.status(500).json({ message: err });
@@ -74,7 +80,7 @@ router.get("/monthlyIncome", verifyTokenAndAdmin, async (req, res) => {
   const previousMonth = new Date(new Date().setMonth(lastMonth.getMonth() - 1));
 
   try {
-    const income = await Order.aggregate([
+    const income = await aggregate([
       {
         $match: {
           createdAt: {
@@ -98,4 +104,4 @@ router.get("/monthlyIncome", verifyTokenAndAdmin, async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;
