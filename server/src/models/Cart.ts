@@ -1,6 +1,11 @@
 import { Schema, model } from "mongoose";
 
-const CartSchema = new Schema(
+interface ICart {
+  userId: string;
+  products: [{ productId: string; quantity: number }];
+}
+
+const CartSchema = new Schema<ICart>(
   {
     userId: {
       type: String,
@@ -20,7 +25,7 @@ const CartSchema = new Schema(
     ],
   },
 
-  { timestamp: true }
+  { timestamps: true }
 );
 
-export default model("Cart", CartSchema);
+export default model<ICart>("Cart", CartSchema);

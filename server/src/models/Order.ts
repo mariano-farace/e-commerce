@@ -1,6 +1,16 @@
 import { Schema, model } from "mongoose";
 
-const OrderSchema = new Schema(
+// TODO hacer de status un enum
+// TODO crear un tipo para adress, todavia no conoces la forma porque se implementa con stripe!
+interface IOrder {
+  userId: string;
+  products: [{ productId: string; quantity: number }];
+  amount: number;
+  address: any;
+  status: string;
+}
+
+const OrderSchema = new Schema<IOrder>(
   {
     userId: {
       type: String,
@@ -31,7 +41,7 @@ const OrderSchema = new Schema(
     },
   },
 
-  { timestamp: true }
+  { timestamps: true }
 );
 
-export default model("Order", OrderSchema);
+export default model<IOrder>("Order", OrderSchema);

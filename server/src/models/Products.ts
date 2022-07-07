@@ -1,6 +1,17 @@
 import { Schema, model } from "mongoose";
 
-const ProductSchema = new Schema(
+interface IProduct {
+  title: string;
+  description: string;
+  img: string;
+  categories: string[];
+  size: string[];
+  color: string[];
+  price: number;
+  inStock: boolean;
+}
+
+const ProductSchema = new Schema<IProduct>(
   {
     title: {
       type: String,
@@ -15,16 +26,10 @@ const ProductSchema = new Schema(
       type: String,
       required: true,
     },
-    categories: {
-      type: Array,
-      required: true,
-    },
-    size: {
-      type: Array,
-    },
-    color: {
-      type: Array,
-    },
+    categories: [{ type: String, required: true }],
+    size: [{ type: String }],
+
+    color: [{ type: String }],
     price: {
       type: Number,
       required: true,
@@ -34,7 +39,7 @@ const ProductSchema = new Schema(
       default: true,
     },
   },
-  { timestamp: true }
+  { timestamps: true }
 );
 
-export default model("Product", ProductSchema);
+export default model<IProduct>("Product", ProductSchema);
