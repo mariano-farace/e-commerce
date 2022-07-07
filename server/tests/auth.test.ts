@@ -1,7 +1,7 @@
-const mongoose = require("mongoose");
-const supertest = require("supertest");
-const app = require("../src/index");
-const User = require("../src/models/User");
+import mongoose from "mongoose";
+import supertest from "supertest";
+import app from "../src/index";
+import User from "../src/models/User";
 
 const api = supertest(app);
 

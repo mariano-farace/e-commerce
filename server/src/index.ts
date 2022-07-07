@@ -12,6 +12,7 @@ const app = express();
 // TS
 // TODO ver si vas a centralizar la interface de producto que se usa en mas de un lugar
 // TODO auth.ts tiene disabled rules globalmente que hay que sacar
+// TODO borrar el jest que es NO TS
 
 // TODO install nodemon as dev dependency
 // TODO add multer and helmet
