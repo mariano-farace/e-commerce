@@ -6,6 +6,7 @@ import User from "../models/User";
 import { hashPassword } from "../helpers";
 import { sign } from "jsonwebtoken";
 import { JWT_SECRET_KEY } from "../config";
+import { isValidObjectId } from "mongoose";
 const router = express.Router();
 
 router.post("/register", async (req, res) => {
@@ -57,8 +58,13 @@ router.post("/login", async (req, res) => {
     // TODO enviar el token como header!
 
     // TODO verificar que coño pasa user._doc y porque y desde cuando lo necesitas!
-    const { password: passwordToDiscard, ...others } = user;
-    res.status(200).json({ ...others, accessToken });
+    res.status(200).json({
+      _id: user._id,
+      username: user.username,
+      email: user.email,
+      isAdmin: user.isAdmin,
+      accessToken,
+    });
   } catch (err) {
     console.log("err", err);
     res.status(500).json({ message: err });
