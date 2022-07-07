@@ -1,9 +1,4 @@
-import Product, {
-  findByIdAndUpdate,
-  findByIdAndDelete,
-  findById,
-  find,
-} from "../models/Products";
+import Product from "../models/Products";
 import { verifyTokenAndAdmin } from "./verifyJWT";
 
 import express from "express";
@@ -27,7 +22,7 @@ router.post("/", verifyTokenAndAdmin, async (req, res) => {
 // UPDATE
 router.put("/:id", verifyTokenAndAdmin, async (req, res) => {
   try {
-    const updatedProduct = await findByIdAndUpdate(
+    const updatedProduct = await Product.findByIdAndUpdate(
       req.params.id,
       // TODO cambiar este metodo $set por uno mas apropiado
       { $set: req.body },
@@ -43,7 +38,7 @@ router.put("/:id", verifyTokenAndAdmin, async (req, res) => {
 // DELETE PRODUCT
 router.delete("/:id", verifyTokenAndAdmin, async (req, res) => {
   try {
-    await findByIdAndDelete(req.params.id);
+    await Product.findByIdAndDelete(req.params.id);
     res.status(200).json({ message: "Product deleted" });
   } catch (err) {
     res.status(500).json({ message: err });
@@ -53,7 +48,7 @@ router.delete("/:id", verifyTokenAndAdmin, async (req, res) => {
 // GET PRODUCT.
 router.get("/find/:id", async (req, res) => {
   try {
-    const product = await findById(req.params.id);
+    const product = await Product.findById(req.params.id);
     res.status(200).json(product);
   } catch (err) {
     res.status(500).json({ message: err });
@@ -69,9 +64,9 @@ router.get("/", async (req, res) => {
     let products;
 
     if (queryNew) {
-      products = await find().sort({ createdAt: -1 }).limit(5);
+      products = await Product.find().sort({ createdAt: -1 }).limit(5);
     } else if (queryCategory) {
-      products = await find({
+      products = await Product.find({
         categories: {
           $in: [queryCategory],
         },
@@ -79,7 +74,7 @@ router.get("/", async (req, res) => {
     }
     // If no query is specified, return all products
     else {
-      products = await find();
+      products = await Product.find();
     }
 
     res.status(200).json(products);

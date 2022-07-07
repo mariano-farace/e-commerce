@@ -2,7 +2,7 @@ import { verify } from "jsonwebtoken";
 
 // TODO usar authorization header!
 // TODO escribir esto en una carpeta middleware
-const verifyToken = (req, res, next) => {
+export const verifyToken = (req, res, next) => {
   // TODO escribir usando async await
   const authHeader = req.headers.token;
   if (authHeader) {
@@ -22,7 +22,7 @@ const verifyToken = (req, res, next) => {
   }
 };
 
-const verifyTokenAndAuthorization = (req, res, next) => {
+export const verifyTokenAndAuthorization = (req, res, next) => {
   verifyToken(req, res, () => {
     // This function is passed as the "next" argument to verifyToken
     if (req.user.id === req.params.id || req.user.isAdmin) {
@@ -33,7 +33,7 @@ const verifyTokenAndAuthorization = (req, res, next) => {
   });
 };
 
-const verifyTokenAndAdmin = (req, res, next) => {
+export const verifyTokenAndAdmin = (req, res, next) => {
   verifyToken(req, res, () => {
     // This function is passed as the "next" argument to verifyToken
     if (req.user.isAdmin) {
@@ -42,10 +42,4 @@ const verifyTokenAndAdmin = (req, res, next) => {
       res.status(403).json({ message: "Forbidden" });
     }
   });
-};
-
-export default {
-  verifyToken,
-  verifyTokenAndAuthorization,
-  verifyTokenAndAdmin,
 };

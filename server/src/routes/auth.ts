@@ -1,11 +1,11 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-misused-promises */
 import express from "express";
-
 import * as argon2 from "argon2";
-const User = require("../models/User").default;
-
-const { hashPassword } = require("../helpers");
-const jwt = require("jsonwebtoken");
-const { JWT_SECRET_KEY } = require("../config");
+import User from "../models/User";
+import { hashPassword } from "../helpers";
+import { sign } from "jsonwebtoken";
+import { JWT_SECRET_KEY } from "../config";
 const router = express.Router();
 
 router.post("/register", async (req, res) => {
@@ -46,7 +46,7 @@ router.post("/login", async (req, res) => {
     }
     // TODO review what you are passing here
     // TODO put this sign token function in helpers methods
-    const accessToken = jwt.sign(
+    const accessToken = sign(
       {
         id: user._id,
         isAdmin: user.isAdmin,
@@ -55,8 +55,9 @@ router.post("/login", async (req, res) => {
       { expiresIn: "1h" }
     );
     // TODO enviar el token como header!
+
     // TODO verificar que coño pasa user._doc y porque y desde cuando lo necesitas!
-    const { password: passwordToDiscard, ...others } = user._doc;
+    const { password: passwordToDiscard, ...others } = user;
     res.status(200).json({ ...others, accessToken });
   } catch (err) {
     console.log("err", err);
@@ -64,4 +65,4 @@ router.post("/login", async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

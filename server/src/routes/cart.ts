@@ -3,12 +3,7 @@ import {
   verifyTokenAndAuthorization,
   verifyTokenAndAdmin,
 } from "./verifyJWT";
-import Cart, {
-  findByIdAndUpdate,
-  findByIdAndDelete,
-  findOne,
-  find,
-} from "../models/Cart";
+import Cart from "../models/Cart";
 
 import express from "express";
 const router = express.Router();
@@ -29,7 +24,7 @@ router.post("/", verifyToken, async (req, res) => {
 // UPDATE
 router.put("/:id", verifyTokenAndAuthorization, async (req, res) => {
   try {
-    const updatedCart = await findByIdAndUpdate(
+    const updatedCart = await Cart.findByIdAndUpdate(
       req.params.id,
       // TODO cambiar este metodo $set por uno mas apropiado
       { $set: req.body },
@@ -45,7 +40,7 @@ router.put("/:id", verifyTokenAndAuthorization, async (req, res) => {
 // DELETE
 router.delete("/:id", verifyTokenAndAuthorization, async (req, res) => {
   try {
-    await findByIdAndDelete(req.params.id);
+    await Cart.findByIdAndDelete(req.params.id);
     res.status(200).json({ message: "Cart deleted" });
   } catch (err) {
     res.status(500).json({ message: err });
@@ -55,7 +50,7 @@ router.delete("/:id", verifyTokenAndAuthorization, async (req, res) => {
 // GET USER CART.
 router.get("/find/:userId", verifyTokenAndAuthorization, async (req, res) => {
   try {
-    const cart = await findOne({ userId: req.params.id });
+    const cart = await Cart.findOne({ userId: req.params.userId });
     res.status(200).json(cart);
   } catch (err) {
     res.status(500).json({ message: err });
@@ -65,7 +60,7 @@ router.get("/find/:userId", verifyTokenAndAuthorization, async (req, res) => {
 // GET ALL PRODUCTS.
 router.get("/", verifyTokenAndAdmin, async (req, res) => {
   try {
-    const carts = await find();
+    const carts = await Cart.find();
     res.status(200).json(carts);
   } catch (err) {
     res.status(500).json({ message: err });

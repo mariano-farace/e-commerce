@@ -1,14 +1,10 @@
+// TODO sacar esta regla
 import {
   verifyToken,
   verifyTokenAndAuthorization,
   verifyTokenAndAdmin,
 } from "./verifyJWT";
-import Order, {
-  findByIdAndUpdate,
-  findByIdAndDelete,
-  find,
-  aggregate,
-} from "../models/Order";
+import Order from "../models/Order";
 
 import express from "express";
 const router = express.Router();
@@ -29,7 +25,7 @@ router.post("/", verifyToken, async (req, res) => {
 // UPDATE
 router.put("/:id", verifyTokenAndAdmin, async (req, res) => {
   try {
-    const updatedOrder = await findByIdAndUpdate(
+    const updatedOrder = await Order.findByIdAndUpdate(
       req.params.id,
       // TODO cambiar este metodo $set por uno mas apropiado
       { $set: req.body },
@@ -45,7 +41,7 @@ router.put("/:id", verifyTokenAndAdmin, async (req, res) => {
 // DELETE
 router.delete("/:id", verifyTokenAndAdmin, async (req, res) => {
   try {
-    await findByIdAndDelete(req.params.id);
+    await Order.findByIdAndDelete(req.params.id);
     res.status(200).json({ message: "Order deleted" });
   } catch (err) {
     res.status(500).json({ message: err });
@@ -55,7 +51,8 @@ router.delete("/:id", verifyTokenAndAdmin, async (req, res) => {
 // GET USER ORDER.
 router.get("/find/:userId", verifyTokenAndAuthorization, async (req, res) => {
   try {
-    const order = await find({ userId: req.params.id });
+    const fUserID = req.params.userId;
+    const order = await Order.find({ userId: fUserID });
     res.status(200).json(order);
   } catch (err) {
     res.status(500).json({ message: err });
@@ -65,7 +62,7 @@ router.get("/find/:userId", verifyTokenAndAuthorization, async (req, res) => {
 // GET ALL ORDERS.
 router.get("/", verifyTokenAndAdmin, async (req, res) => {
   try {
-    const orders = await find();
+    const orders = await Order.find();
     res.status(200).json(orders);
   } catch (err) {
     res.status(500).json({ message: err });
@@ -80,7 +77,7 @@ router.get("/monthlyIncome", verifyTokenAndAdmin, async (req, res) => {
   const previousMonth = new Date(new Date().setMonth(lastMonth.getMonth() - 1));
 
   try {
-    const income = await aggregate([
+    const income = await Order.aggregate([
       {
         $match: {
           createdAt: {

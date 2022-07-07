@@ -1,27 +1,21 @@
-import {
-  findByIdAndUpdate,
-  findByIdAndDelete,
-  findById,
-  find,
-  aggregate,
-} from "../models/User";
 import { verifyTokenAndAuthorization, verifyTokenAndAdmin } from "./verifyJWT";
 import { hashPassword } from "../helpers";
 import express from "express";
+import User from "../models/User";
 const router = express.Router();
 
 // TODO comprobar si vale la pena separar las rutas de usuario y de admin
 // CHANGE USER DETAILS
-// TODO esto hay que revisarlo, porque si se le ocurre mandar isAdmin desde el front, podrian cambiarlo, definitivamente hay que modificarlo
+// TODO esto hay que revisarlo, porque si se le ocurre mandar isAdmin desde el front, podrían cambiarlo, definitivamente hay que modificarlo
 router.put("/:id", verifyTokenAndAuthorization, async (req, res) => {
   if (req.body.password) {
     req.body.password = await hashPassword(req.body.password);
   }
 
   try {
-    const updatedUser = await findByIdAndUpdate(
+    // TODO cambiar el método $set por uno mas apropiado
+    const updatedUser = await User.findByIdAndUpdate(
       req.params.id,
-      // TODO cambiar este metodo $set por uno mas apropiado
       { $set: req.body },
       { new: true }
     );
@@ -35,7 +29,7 @@ router.put("/:id", verifyTokenAndAuthorization, async (req, res) => {
 // DELETE USER
 router.delete("/:id", verifyTokenAndAuthorization, async (req, res) => {
   try {
-    await findByIdAndDelete(req.params.id);
+    await User.findByIdAndDelete(req.params.id);
     res.status(200).json({ message: "User deleted" });
   } catch (err) {
     res.status(500).json({ message: err });
@@ -45,7 +39,7 @@ router.delete("/:id", verifyTokenAndAuthorization, async (req, res) => {
 // GET USER. ONLY ADMIN CAN DO THIS
 router.get("find/:id", verifyTokenAndAdmin, async (req, res) => {
   try {
-    const user = await findById(req.params.id);
+    const user = await User.findById(req.params.id);
 
     // TODO aca el user esta devolviendo el password, modificarlo con destructuring para sacar el pass del medio
 
@@ -61,9 +55,9 @@ router.get("/", verifyTokenAndAdmin, async (req, res) => {
 
   try {
     const users = query
-      ? // TODO Comprobar esto, los esta ordenando por id, no por fecha, deberias poner created at????
-        await find().sort({ _id: -1 }).limit(5)
-      : await find();
+      ? // TODO Comprobar esto, los esta ordenando por id, no por fecha, deberías poner created at????
+        await User.find().sort({ _id: -1 }).limit(5)
+      : await User.find();
     res.status(200).json(users);
   } catch (err) {
     res.status(500).json({ message: err });
@@ -77,7 +71,7 @@ router.get("/stats", verifyTokenAndAdmin, async (req, res) => {
   const lastYear = new Date(date.setFullYear(date.getFullYear() - 1));
   // TODO revisar esta query
   try {
-    const data = await aggregate([
+    const data = await User.aggregate([
       { $match: { createdAt: { $gte: lastYear } } },
       {
         $project: {
