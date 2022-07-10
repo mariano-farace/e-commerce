@@ -6,7 +6,7 @@ import authRouter from "./routes/auth";
 import productRouter from "./routes/product";
 import orderRouter from "./routes/order";
 import cartRouter from "./routes/cart";
-import cors from "cors";
+import cors, { CorsOptions } from "cors";
 const app = express();
 
 // TS
@@ -30,7 +30,7 @@ app.use(
 app.use(json()); // for parsing application/json
 app.use(urlencoded({ extended: true }));
 
-connect(MONGO_DB_URL)
+connect(MONGO_DB_URL as string)
   .then(() => {
     console.log("Connected to MongoDB");
   })

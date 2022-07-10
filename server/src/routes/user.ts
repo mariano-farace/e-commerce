@@ -2,29 +2,34 @@ import { verifyTokenAndAuthorization, verifyTokenAndAdmin } from "./verifyJWT";
 import { hashPassword } from "../helpers";
 import express from "express";
 import User from "../models/User";
+import { TypedRequestBody } from "../types";
 const router = express.Router();
 
 // TODO comprobar si vale la pena separar las rutas de usuario y de admin
 // CHANGE USER DETAILS
 // TODO esto hay que revisarlo, porque si se le ocurre mandar isAdmin desde el front, podrían cambiarlo, definitivamente hay que modificarlo
-router.put("/:id", verifyTokenAndAuthorization, async (req, res) => {
-  if (req.body.password) {
-    req.body.password = await hashPassword(req.body.password);
-  }
+router.put(
+  "/:id",
+  verifyTokenAndAuthorization,
+  async (req: TypedRequestBody<{ password: string }>, res) => {
+    if (req.body.password) {
+      req.body.password = await hashPassword(req.body.password);
+    }
 
-  try {
-    // TODO cambiar el método $set por uno mas apropiado
-    const updatedUser = await User.findByIdAndUpdate(
-      req.params.id,
-      { $set: req.body },
-      { new: true }
-    );
-    res.status(200).json(updatedUser);
-  } catch (err) {
-    console.log("err", err);
-    res.status(500).json({ message: err });
+    try {
+      // TODO cambiar el método $set por uno mas apropiado
+      const updatedUser = await User.findByIdAndUpdate(
+        req.params.id,
+        { $set: req.body },
+        { new: true }
+      );
+      res.status(200).json(updatedUser);
+    } catch (err) {
+      console.log("err", err);
+      res.status(500).json({ message: err });
+    }
   }
-});
+);
 
 // DELETE USER
 router.delete("/:id", verifyTokenAndAuthorization, async (req, res) => {

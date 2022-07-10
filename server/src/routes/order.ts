@@ -17,7 +17,7 @@ router.post("/", verifyToken, async (req, res) => {
   try {
     const order = await newOrder.save();
     res.status(200).json(order);
-  } catch (err) {
+  } catch (err: unknown) {
     res.status(500).json({ message: err });
   }
 });
@@ -32,8 +32,7 @@ router.put("/:id", verifyTokenAndAdmin, async (req, res) => {
       { new: true }
     );
     res.status(200).json(updatedOrder);
-  } catch (err) {
-    console.log("err", err);
+  } catch (err: unknown) {
     res.status(500).json({ message: err });
   }
 });
@@ -43,7 +42,7 @@ router.delete("/:id", verifyTokenAndAdmin, async (req, res) => {
   try {
     await Order.findByIdAndDelete(req.params.id);
     res.status(200).json({ message: "Order deleted" });
-  } catch (err) {
+  } catch (err: unknown) {
     res.status(500).json({ message: err });
   }
 });
@@ -54,7 +53,7 @@ router.get("/find/:userId", verifyTokenAndAuthorization, async (req, res) => {
     const fUserID = req.params.userId;
     const order = await Order.find({ userId: fUserID });
     res.status(200).json(order);
-  } catch (err) {
+  } catch (err: unknown) {
     res.status(500).json({ message: err });
   }
 });
@@ -64,7 +63,7 @@ router.get("/", verifyTokenAndAdmin, async (req, res) => {
   try {
     const orders = await Order.find();
     res.status(200).json(orders);
-  } catch (err) {
+  } catch (err: unknown) {
     res.status(500).json({ message: err });
   }
 });
@@ -96,7 +95,7 @@ router.get("/monthlyIncome", verifyTokenAndAdmin, async (req, res) => {
     ]);
 
     res.status(200).json(income);
-  } catch (err) {
+  } catch (err: unknown) {
     res.status(500).json({ message: err });
   }
 });

@@ -4,7 +4,7 @@ import Stripe from "stripe";
 const router = express.Router();
 
 // TODO comprobar que la configuracion apiVesion sea correcta
-const stripe = new Stripe(STRIPE_SECRET_KEY, {
+const stripe = new Stripe(STRIPE_SECRET_KEY as string, {
   apiVersion: "2020-08-27",
 });
 
