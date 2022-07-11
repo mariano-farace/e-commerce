@@ -24,7 +24,7 @@ router.put(
         { new: true }
       );
       res.status(200).json(updatedUser);
-    } catch (err) {
+    } catch (err: unknown) {
       console.log("err", err);
       res.status(500).json({ message: err });
     }
@@ -36,7 +36,7 @@ router.delete("/:id", verifyTokenAndAuthorization, async (req, res) => {
   try {
     await User.findByIdAndDelete(req.params.id);
     res.status(200).json({ message: "User deleted" });
-  } catch (err) {
+  } catch (err: unknown) {
     res.status(500).json({ message: err });
   }
 });
@@ -49,7 +49,7 @@ router.get("find/:id", verifyTokenAndAdmin, async (req, res) => {
     // TODO aca el user esta devolviendo el password, modificarlo con destructuring para sacar el pass del medio
 
     res.status(200).json(user);
-  } catch (err) {
+  } catch (err: unknown) {
     res.status(500).json({ message: err });
   }
 });
@@ -64,7 +64,7 @@ router.get("/", verifyTokenAndAdmin, async (req, res) => {
         await User.find().sort({ _id: -1 }).limit(5)
       : await User.find();
     res.status(200).json(users);
-  } catch (err) {
+  } catch (err: unknown) {
     res.status(500).json({ message: err });
   }
 });
@@ -91,7 +91,7 @@ router.get("/stats", verifyTokenAndAdmin, async (req, res) => {
       },
     ]);
     res.status(200).json(data);
-  } catch (err) {
+  } catch (err: unknown) {
     res.status(500).json({ message: err });
   }
 });
