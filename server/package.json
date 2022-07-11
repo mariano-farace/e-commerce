@@ -8,7 +8,7 @@
     "devJS": "cross-env NODE_ENV=development nodemon src/index.js",
     "test": "cross-env NODE_ENV=test jest --watch --verbose --runInBand --forceExit",
     "build": "tsc",
-    "dev": "ts-node-dev src/index.ts",
+    "dev": "ts-node-dev --files src/index.ts",
     "lint": "eslint --ext .ts ."
   },
   "author": "",
