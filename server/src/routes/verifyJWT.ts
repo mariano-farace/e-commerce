@@ -1,8 +1,13 @@
+import { NextFunction, Request, Response } from "express";
 import { verify } from "jsonwebtoken";
 
 // TODO usar authorization header!
 // TODO escribir esto en una carpeta middleware
-export const verifyToken = (req, res, next) => {
+export const verifyToken = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   // TODO escribir usando async await
   const authHeader = req.headers.token;
   if (authHeader) {
