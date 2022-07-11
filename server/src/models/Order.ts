@@ -2,7 +2,7 @@ import { Schema, model } from "mongoose";
 
 // TODO hacer de status un enum
 // TODO crear un tipo para adress, todavia no conoces la forma porque se implementa con stripe!
-interface IOrder {
+export interface IOrder {
   userId: string;
   products: [{ productId: string; quantity: number }];
   amount: number;
