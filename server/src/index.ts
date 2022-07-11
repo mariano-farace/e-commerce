@@ -6,7 +6,7 @@ import authRouter from "./routes/auth";
 import productRouter from "./routes/product";
 import orderRouter from "./routes/order";
 import cartRouter from "./routes/cart";
-import cors, { CorsOptions } from "cors";
+import cors from "cors";
 const app = express();
 
 // TS
