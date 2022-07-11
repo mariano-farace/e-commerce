@@ -5,7 +5,7 @@ import User, { IUser } from "../models/User";
 import { hashPassword } from "../helpers";
 import { sign } from "jsonwebtoken";
 import { JWT_SECRET_KEY } from "../config";
-import { TypedRequestBody } from "../types";
+import { TypedRequestBody } from "../@types/types";
 import { MongoError } from "mongodb";
 const router = express.Router();
 
@@ -71,7 +71,7 @@ router.post(
         isAdmin: user.isAdmin,
         accessToken,
       });
-    } catch (err) {
+    } catch (err: unknown) {
       console.log("err", err);
       res.status(500).json({ message: err });
     }

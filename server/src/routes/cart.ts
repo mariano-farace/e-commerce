@@ -5,7 +5,7 @@ import {
 } from "./verifyJWT";
 import Cart, { ICart } from "../models/Cart";
 import express, { Request, Response } from "express";
-import { TypedRequest, TypedRequestBody } from "../types";
+import { TypedRequest, TypedRequestBody } from "../@types/types";
 const router = express.Router();
 
 // CREATE

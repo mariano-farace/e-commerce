@@ -2,7 +2,7 @@ import { verifyTokenAndAuthorization, verifyTokenAndAdmin } from "./verifyJWT";
 import { hashPassword } from "../helpers";
 import express from "express";
 import User from "../models/User";
-import { TypedRequestBody } from "../types";
+import { TypedRequestBody } from "../@types/types";
 const router = express.Router();
 
 // TODO comprobar si vale la pena separar las rutas de usuario y de admin
