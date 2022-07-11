@@ -59,7 +59,7 @@ router.post(
           id: user._id,
           isAdmin: user.isAdmin,
         },
-        JWT_SECRET_KEY,
+        JWT_SECRET_KEY as string,
         { expiresIn: "1h" }
       );
       // TODO enviar el token como header!

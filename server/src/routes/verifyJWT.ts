@@ -9,10 +9,10 @@ export const verifyToken = (
   next: NextFunction
 ) => {
   // TODO escribir usando async await
-  const authHeader = req.headers.token;
+  const authHeader = req.headers.token as string;
   if (authHeader) {
     const token = authHeader.split(" ")[1];
-    verify(token, process.env.JWT_SECRET_KEY, (err, user) => {
+    verify(token, process.env.JWT_SECRET_KEY as string, (err, user) => {
       if (err) {
         return res.status(401).json({ message: "Invalid token" });
       } else {
