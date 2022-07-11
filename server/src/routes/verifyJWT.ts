@@ -27,7 +27,11 @@ export const verifyToken = (
   }
 };
 
-export const verifyTokenAndAuthorization = (req, res, next) => {
+export const verifyTokenAndAuthorization = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   verifyToken(req, res, () => {
     // This function is passed as the "next" argument to verifyToken
     if (req.user.id === req.params.id || req.user.isAdmin) {
@@ -38,7 +42,11 @@ export const verifyTokenAndAuthorization = (req, res, next) => {
   });
 };
 
-export const verifyTokenAndAdmin = (req, res, next) => {
+export const verifyTokenAndAdmin = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   verifyToken(req, res, () => {
     // This function is passed as the "next" argument to verifyToken
     if (req.user.isAdmin) {
