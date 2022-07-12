@@ -1,7 +1,7 @@
-const mongoose = require("mongoose");
-const supertest = require("supertest");
-const app = require("../index");
-const User = require("../models/User");
+import mongoose from "mongoose";
+import supertest from "supertest";
+import app from "../src/index";
+import User from "../src/models/User";
 
 const api = supertest(app);
 
@@ -37,9 +37,9 @@ describe("user creation", () => {
     const user = await User.findOne({ username: "test" });
     // TODO improve this test adding the full object from database (id, isAdmin, password hashed, etc)
     expect(user).toBeDefined();
-    expect(user.username).toBe(newUser.username);
-    expect(user.email).toBe(newUser.email);
-    expect(user.isAdmin).toBe(false);
+    expect(user?.username).toBe(newUser.username);
+    expect(user?.email).toBe(newUser.email);
+    expect(user?.isAdmin).toBe(false);
   });
 
   test("creating user with non unique username fails", async () => {
@@ -125,6 +125,6 @@ describe("user login", () => {
   });
 });
 
-afterAll(() => {
-  mongoose.connection.close();
+afterAll(async () => {
+  await mongoose.connection.close();
 });

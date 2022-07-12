@@ -1,38 +1,42 @@
-const router = require("express").Router();
-const User = require("../models/User");
-const {
-  verifyTokenAndAuthorization,
-  verifyTokenAndAdmin,
-} = require("./verifyJWT");
-const { hashPassword } = require("../helpers");
+import { verifyTokenAndAuthorization, verifyTokenAndAdmin } from "./verifyJWT";
+import { hashPassword } from "../helpers";
+import express from "express";
+import User from "../models/User";
+import { TypedRequestBody } from "../@types/types";
+const router = express.Router();
+
 // TODO comprobar si vale la pena separar las rutas de usuario y de admin
 // CHANGE USER DETAILS
-// TODO esto hay que revisarlo, porque si se le ocurre mandar isAdmin desde el front, podrian cambiarlo, definitivamente hay que modificarlo
-router.put("/:id", verifyTokenAndAuthorization, async (req, res) => {
-  if (req.body.password) {
-    req.body.password = await hashPassword(req.body.password);
-  }
+// TODO esto hay que revisarlo, porque si se le ocurre mandar isAdmin desde el front, podrían cambiarlo, definitivamente hay que modificarlo
+router.put(
+  "/:id",
+  verifyTokenAndAuthorization,
+  async (req: TypedRequestBody<{ password: string }>, res) => {
+    if (req.body.password) {
+      req.body.password = await hashPassword(req.body.password);
+    }
 
-  try {
-    const updatedUser = await User.findByIdAndUpdate(
-      req.params.id,
-      // TODO cambiar este metodo $set por uno mas apropiado
-      { $set: req.body },
-      { new: true }
-    );
-    res.status(200).json(updatedUser);
-  } catch (err) {
-    console.log("err", err);
-    res.status(500).json({ message: err });
+    try {
+      // TODO cambiar el método $set por uno mas apropiado
+      const updatedUser = await User.findByIdAndUpdate(
+        req.params.id,
+        { $set: req.body },
+        { new: true }
+      );
+      res.status(200).json(updatedUser);
+    } catch (err: unknown) {
+      console.log("err", err);
+      res.status(500).json({ message: err });
+    }
   }
-});
+);
 
 // DELETE USER
 router.delete("/:id", verifyTokenAndAuthorization, async (req, res) => {
   try {
     await User.findByIdAndDelete(req.params.id);
     res.status(200).json({ message: "User deleted" });
-  } catch (err) {
+  } catch (err: unknown) {
     res.status(500).json({ message: err });
   }
 });
@@ -45,7 +49,7 @@ router.get("find/:id", verifyTokenAndAdmin, async (req, res) => {
     // TODO aca el user esta devolviendo el password, modificarlo con destructuring para sacar el pass del medio
 
     res.status(200).json(user);
-  } catch (err) {
+  } catch (err: unknown) {
     res.status(500).json({ message: err });
   }
 });
@@ -56,11 +60,11 @@ router.get("/", verifyTokenAndAdmin, async (req, res) => {
 
   try {
     const users = query
-      ? // TODO Comprobar esto, los esta ordenando por id, no por fecha, deberias poner created at????
+      ? // TODO Comprobar esto, los esta ordenando por id, no por fecha, deberías poner created at????
         await User.find().sort({ _id: -1 }).limit(5)
       : await User.find();
     res.status(200).json(users);
-  } catch (err) {
+  } catch (err: unknown) {
     res.status(500).json({ message: err });
   }
 });
@@ -87,11 +91,11 @@ router.get("/stats", verifyTokenAndAdmin, async (req, res) => {
       },
     ]);
     res.status(200).json(data);
-  } catch (err) {
+  } catch (err: unknown) {
     res.status(500).json({ message: err });
   }
 });
 
-module.exports = router;
+export default router;
 
 // TODO generar usuarios sin info!!

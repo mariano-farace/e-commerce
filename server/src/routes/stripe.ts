@@ -1,7 +1,12 @@
-const router = require("express").Router();
-const { STRIPE_SECRET_KEY } = require("../config");
+import { STRIPE_SECRET_KEY } from "../config";
+import express from "express";
+import Stripe from "stripe";
+const router = express.Router();
 
-const stripe = require("stripe")(STRIPE_SECRET_KEY);
+// TODO comprobar que la configuracion apiVesion sea correcta
+const stripe = new Stripe(STRIPE_SECRET_KEY as string, {
+  apiVersion: "2020-08-27",
+});
 
 router.post("/payment", async (req, res) => {
   stripe.charges.create(
@@ -20,4 +25,4 @@ router.post("/payment", async (req, res) => {
   );
 });
 
-module.exports = router;
+export default router;
