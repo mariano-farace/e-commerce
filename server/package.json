@@ -6,7 +6,8 @@
   "scripts": {
     "start": "cross-env NODE_ENV=production build/index.js",
     "devJS": "cross-env NODE_ENV=development nodemon src/index.js",
-    "test": "cross-env NODE_ENV=test jest --watch --verbose --runInBand --forceExit",
+    "test": "cross-env NODE_ENV=test jest --watch --coverage --verbose --runInBand --forceExit",
+    "test-coverage": "cross-env NODE_ENV=test jest --coverage --verbose --runInBand --forceExit",
     "build": "tsc",
     "dev": "ts-node-dev --files src/index.ts",
     "lint": "eslint --ext .ts ."
