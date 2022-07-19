@@ -39,11 +39,11 @@ connect(MONGO_DB_URL as string)
     console.log(err);
   });
 
-app.get("/api/v1/test", (req, res) => {
+app.get("/api/v1/test", (_req, res) => {
   console.log("successful test");
   res.send("successful test");
 });
-
+// TODO run linter from console
 // TODO modificar para usar singular en las rutas
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/user", userRouter);
